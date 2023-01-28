@@ -1,11 +1,11 @@
 import {
   faRemove,
-  faSadCry,
   faSearch,
   faSmileBeam,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { PropagateLoader } from "react-spinners";
 
 const Home = () => {
   const [results, setResults] = useState({});
@@ -29,15 +29,15 @@ const Home = () => {
         setErrorMsg("");
         setResults(data);
       })
-      .catch((error) => {
+      .catch((e) => {
         setLoading(false);
-        setErrorMsg(error.message);
+        setErrorMsg("The server is sleeping now 😴 try again later 😊");
       });
   };
 
   return (
-    <div className="mx-4 lg:mx-0 Home grid grid-cols-1 content-between">
-      <div>
+    <div className="bg-slate-800 Home grid grid-cols-1 content-between">
+      <div className="mx-2 lg:mx-0">
         <div className="text-center  my-5">
           <h1 className="text-4xl font-bold text-amber-400">
             <FontAwesomeIcon icon={faSearch} /> Chat
@@ -51,14 +51,12 @@ const Home = () => {
             type="search"
             name="prompt"
             placeholder="Type here"
-            className="p-3 lg:mx-2 w-3/4 lg:w-3/6 outline-none"
+            className="p-3 w-3/4 lg:w-3/6 outline-none"
+            required
           />
-
-          <input
-            type="submit"
-            className="p-3 my-2 lg:my-0 w-1/5 lg:w-1/12 bg-pink-500 hover:bg-pink-600 text-zinc-100 font-bold cursor-pointer"
-            value="SEARCH"
-          />
+          <button className="py-3 w-1/5 lg:w-1/12 bg-pink-500 hover:bg-pink-600 text-zinc-100 font-bold cursor-pointer">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
         </form>
 
         {Object.keys(results).length !== 0 && (
@@ -76,15 +74,9 @@ const Home = () => {
         ) : (
           <div className="text-center text-5xl text-amber-500 cursor-pointer">
             {loading ? (
-              <button className="btn loading">loading</button>
+              <PropagateLoader color="#f59e0b" />
             ) : errorMsg.length > 0 ? (
-              <p className="text-base text-rose-500">
-                {errorMsg}
-                <FontAwesomeIcon
-                  icon={faSadCry}
-                  className="ml-2 text-amber-500"
-                />
-              </p>
+              <p className="text-base text-rose-500">{errorMsg}</p>
             ) : (
               <FontAwesomeIcon icon={faSmileBeam} />
             )}
@@ -92,7 +84,7 @@ const Home = () => {
         )}
       </div>
       <div>
-        <footer className="footer footer-center p-4  text-base-content">
+        <footer className="text-center text-zinc-400 p-4 text-base-content">
           <div>
             <p>
               Developed & Designed by{" "}
