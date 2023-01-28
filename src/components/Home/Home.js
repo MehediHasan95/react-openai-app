@@ -60,7 +60,7 @@ const Home = () => {
         </form>
 
         {Object.keys(results).length !== 0 && (
-          <div className="mx-auto max-w-max px-2 lg:px-5">
+          <div className="text-zinc-100 mx-auto max-w-max px-2 lg:px-5">
             <pre>
               <code>{results.text}</code>
             </pre>
